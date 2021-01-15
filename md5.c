@@ -1,5 +1,4 @@
-//#include <md5.h>
-//#include <libcrypto>
+#include "hashlib2plus/trunk/src/hashlibpp.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
