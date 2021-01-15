@@ -1,6 +1,5 @@
 //#include <libcrypto>
-//#include "hashlib2plus/trunk/src/hashlibpp.h"
-
+#include "hashlib2plus/trunk/src/hashlibpp.h"
 //#include <openssl/md5.h>
 
 #include <algorithm>
@@ -31,20 +30,20 @@ md5_crypt(const std::string pw, const std::string salt)
 {
   //Trying to use the hashwrapper thing given by the hashlib2plus example
   // hashwrapper *md5Wrapper = new md5wrapper();
-  MD5_CTX ctx;
+  HL_MD5_CTX ctx;
   const std::string magic = "$1$";
   std::string res = pw + magic + salt;
-  std::string temp = pw + salt + pw;
+  std::string h = pw + salt + pw;
 
-  MD5_Init(&ctx);
-  MD5_Update(temp, temp.size());
-  MD5_Final(h, &ctx);
+  MD5Init(&ctx);
+  MD5Update(h, h.size());
+  MD5Final(h, &ctx);
   
   int l = pw.length();
 
   // Replace res with the hashed string of pw + salt + pw ??
   std::string sub;
-  MD5_Init(&ctx);
+  MD5Init(&ctx);
   while (l > 0) {
     res = res + h.substr(0, std::min(16, l));
     l = l - 16;
@@ -57,8 +56,8 @@ md5_crypt(const std::string pw, const std::string salt)
       res += pw[0];
     }
   }
-  MD5_Update(res, res.size()); //second time hashing the new Alternate (is that word LMAO)
-  MD5_Final(h, &ctx);
+  MD5Update(res, res.size()); //second time hashing the new Alternate (is that word LMAO)
+  MD5Final(h, &ctx);
   
   for (int i = 0; i < 1000; i++) {
     std::string tmp; //temp string
@@ -80,9 +79,9 @@ md5_crypt(const std::string pw, const std::string salt)
     else {
       tmp += pw;
     }
-    MD5_Init(&ctx);
-    MD5_Update(tmp, tmp.size());
-    MD5_Update(h, &ctx);
+    MD5Init(&ctx);
+    MD5Update(tmp, tmp.size());
+    MD5Update(h, &ctx);
   }
   std::string ret;
   /*strcpy(ret, to64((h[0] << 16) | (h[6] << 8) | (h[12]), 4));
