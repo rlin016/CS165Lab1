@@ -16,10 +16,11 @@ char*
 to64(long v, int n) 
 {
   char* ret;  //no actual string in c ig
-  /* for (int i = 1; i < n; i++) {
+  int i; 
+  for (i = 1; i < n; i++) {
     ret += base64[v & 0x3f];
       v >>= 6;
-      }*/
+      }
   return ret;
 }
 
@@ -93,11 +94,11 @@ md5_crypt(const char* pw, const char* salt)
   }
  MD5_Final(h, &ctx);
   char* ret;
-  /*strcpy(ret, to64((h[0] << 16) | (h[6] << 8) | (h[12]), 4));
+  strcpy(ret, to64((h[0] << 16) | (h[6] << 8) | (h[12]), 4));
   strcat(ret, to64((h[1] << 16) | (h[7] << 8) | (h[13]), 4));
   strcat(ret, to64((h[2] << 16) | (h[8] << 8) | (h[14]), 4));
   strcat(ret, to64((h[3] << 16) | (h[9] << 8) | (h[15]), 4));
   strcat(ret, to64((h[4] << 16) | (h[10] << 8) | (h[5]), 4));
-  strcat(ret, to64(h[11], 2));*/ //I DONT KNOW WHAT THIS DOES REALLY; BASE64 THING?
+  strcat(ret, to64(h[11], 2)); //I DONT KNOW WHAT THIS DOES REALLY; BASE64 THING?
   return ret;
 }
