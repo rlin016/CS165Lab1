@@ -3,6 +3,8 @@
 //#include <md5.h>
 
 int main(int argc, char* argv[]) {
+  printf("Start of main\n");
+  fflush(stdout);
   const char stringnum[64] = "abcdefghijklmnopqrstuvwxyz";
   char ret[9] = {0};
   char salt[10] = "hfT7jp2q";
@@ -20,12 +22,15 @@ int main(int argc, char* argv[]) {
 	    ret[4] = stringnum[m];
 	    for(n = 0; n < strlen(stringnum); n = n + 1){
 	      ret[5] = stringnum[n];
-	      char newCrypt = md5_crypt(ret, salt);
+	      // printf("Printing stringnum: %d\n", ret);
+	      fflush(stdout);
+	      // char newCrypt = md5_crypt(ret, salt);
+	      char* newCrypt = "newline";
 	      strcpy(pass, &newCrypt);
 	      if(strcmp("wPwz7GC6xLt9eQZ9eJkaq.", pass) == 0){
 		printf("Found pass: %d", pass);
 	      }
-		 // printf(ret);
+	      printf(ret);
 	      printf("\n");
 	    }
 	  }

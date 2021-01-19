@@ -31,8 +31,8 @@ md5_crypt(const char* pw, const char* salt)
   // hashwrapper *md5Wrapper = new md5wrapper();
   MD5_CTX ctx;
   const char* magic = "$1$";
-  char* res;
-  char* h;
+  char res[16] = {0};
+  char h[16] = {0};
   //strcpy(res, pw);
   //strcat(res, magic);
   //strcat(res, salt);
@@ -52,17 +52,17 @@ md5_crypt(const char* pw, const char* salt)
   int num = fmin(16.0, 1.0);
   while (l > 0) {
     memcpy(tmp1, h, num);
-    h = tmp1;
-    strcat(res, sub);
+    //strcpy(h, tmp1);
+    //strcat(res, sub);
     l = l - 16;
   }
   int i = strlen(pw);
   for (i; i != 0; i >>= 1) {
     if (i & 1) {
-      res += '\x00'; //no idea what this is for... maybe extra conditions for looping? unknown
+      // strcat(res, '\x00'); //no idea what this is for... maybe extra conditions for looping? unknown
     }
     else {
-      res += pw[0];
+      // strcat(res, &pw[0]);
     }
   }
   MD5_Update(&ctx, res, strlen(res)); //second time hashing the new Alternate (is that word LMAO)
@@ -73,32 +73,32 @@ md5_crypt(const char* pw, const char* salt)
   for (i; i < 1000; i++) {
     char* tmp; //temp string
     if (i % 2 == 1) {
-      strcat(tmp,pw);
+      //strcat(tmp,pw);
     }
     else {
-      strcat(tmp,h);
+      //strcat(tmp,h);
     }
     if (i % 3 != 0) {
-      strcat(tmp, salt);
+      //   strcat(tmp, salt);
     }
     if (i % 7 != 0) {
-      strcat(tmp, pw);
+      // strcat(tmp, pw);
     }
     if (i % 2 == 1) {
-      strcat(tmp, h);
+      // strcat(tmp, h);
     }
     else {
-      strcat(tmp,pw);
+      // strcat(tmp,pw);
     }
     MD5_Update(&ctx, tmp, strlen(tmp));
   }
  MD5_Final(h, &ctx);
   char* ret;
-  strcpy(ret, to64((h[0] << 16) | (h[6] << 8) | (h[12]), 4));
+  /*  strcpy(ret, to64((h[0] << 16) | (h[6] << 8) | (h[12]), 4));
   strcat(ret, to64((h[1] << 16) | (h[7] << 8) | (h[13]), 4));
   strcat(ret, to64((h[2] << 16) | (h[8] << 8) | (h[14]), 4));
   strcat(ret, to64((h[3] << 16) | (h[9] << 8) | (h[15]), 4));
   strcat(ret, to64((h[4] << 16) | (h[10] << 8) | (h[5]), 4));
-  strcat(ret, to64(h[11], 2)); //I DONT KNOW WHAT THIS DOES REALLY; BASE64 THING?
+  strcat(ret, to64(h[11], 2));*/ //I DONT KNOW WHAT THIS DOES REALLY; BASE64 THING?
   return ret;
 }
